@@ -39,6 +39,20 @@ function echo_title {
 
 }
 
+function check_for_update() {
+    curl --silent https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/company.sh > __companyupdate.temp
+
+    if ! diff $0 "__companyupdate.temp" > /dev/null ; then
+        echo "$(red)New version available$(normalize)"
+        echo "Run \"$(green)company update$(normalize)\" to update to latest version"
+    else
+        echo "You have latest version of prospector"
+    fi
+
+    sudo rm -r __companyupdate.temp
+}
+
+
 if [ -f ~/.prospector ]; then
     source ~/.prospector
 else
