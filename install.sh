@@ -1,5 +1,5 @@
 #!/bin/bash
 
-wget https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/company.sh
-sudo chmod +x ./company.sh
-sudo mv ./company.sh /usr/local/bin/company
+wget https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/prospector.sh
+sudo chmod +x ./prospector.sh
+sudo mv ./prospector.sh /usr/local/bin/prospector

@@ -40,11 +40,11 @@ function echo_title {
 }
 
 function check_for_update() {
-    curl --silent https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/company.sh > __companyupdate.temp
+    curl --silent https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/prospector.sh > __companyupdate.temp
 
     if ! diff $0 "__companyupdate.temp" > /dev/null ; then
         echo "$(red)New version available$(normalize)"
-        echo "Run \"$(green)company update$(normalize)\" to update to latest version"
+        echo "Run \"$(green)prospector update$(normalize)\" to update to latest version"
     else
         echo "You have latest version of prospector"
     fi
@@ -53,10 +53,10 @@ function check_for_update() {
 }
 
 function self_update() {
-    sudo rm -f company.sh /usr/local/bin/company
-    wget https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/company.sh
-    sudo chmod +x ./company.sh
-    sudo mv ./company.sh /usr/local/bin/company
+    sudo rm -f prospector.sh /usr/local/bin/prospector
+    wget https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/prospector.sh
+    sudo chmod +x ./prospector.sh
+    sudo mv ./prospector.sh /usr/local/bin/prospector
 
     echo "$(green)Prospector updated to latest version — yaaay!$(normalize)"
     exit 0
