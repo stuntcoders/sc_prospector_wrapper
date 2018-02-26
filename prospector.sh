@@ -70,7 +70,10 @@ else
 	exit 1
 fi
 
-curl --silent "https://company.clearbit.com/v2/companies/find?domain=$1" -u $CLEARBIT_KEY | jq -r '.metrics' | in2csv -f json >> output.csv
+
+echo "-------- $1 --------" >> output.csv
+
+curl --silent "https://company.clearbit.com/v2/companies/find?domain=$1" -u sk_3834ce4423aff86edde12dd2e9789f2d: | jq -r '{employees: .metrics.employeesRange, rev: .metrics.estimatedAnnualRevenue}' >> output.csv
 
 curl --silent "https://api.hunter.io/v2/domain-search?domain=$1&api_key=$HUNTER_KEY" | jq -r '.data.emails' | in2csv -f json | csvcut -c value,type,confidence >> output.csv
 
