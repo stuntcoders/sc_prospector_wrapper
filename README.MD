@@ -8,9 +8,7 @@ Script depends on:
 
 To run it, first install the tool:
 ```
-wget https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/company.sh
-sudo chmod +x ./company.sh
-sudo cp ./company.sh /usr/local/bin/company
+curl https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/install.sh | bash
 ```
 
 Then run following command:
