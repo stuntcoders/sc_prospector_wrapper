@@ -52,6 +52,16 @@ function check_for_update() {
     sudo rm -r __companyupdate.temp
 }
 
+function self_update() {
+    sudo rm -f company.sh /usr/local/bin/company
+    wget https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/company.sh
+    sudo chmod +x ./company.sh
+    sudo mv ./company.sh /usr/local/bin/company
+
+    echo "$(green)Prospector updated to latest version — yaaay!$(normalize)"
+    exit 0
+}
+
 
 if [ -f ~/.prospector ]; then
     source ~/.prospector
