@@ -13,6 +13,31 @@ echo_bold ()      { echo -e "$(bold)$1$(normalize)"; }
 echo_underline () { echo -e "\033[4m$1$(normalize)"; }
 echo_color ()     { echo -e "$2$1$(normalize)"; }
 
+
+SCRIPT=${0##*/}
+
+USAGE="\
+Prospector by $(green)StuntCoders doo$(normalize)
+
+ ____________
+< prospector >
+ ------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+
+Global Commands:
+  $SCRIPT <command> [<options>]
+--------------------------------------------------------------------------
+  $(green)help$(normalize)                                List commands with short description
+  $(green)update$(normalize)                              Updates Prospector to latest version
+  $(green)version-check$(normalize)                       Check if latest version is used
+
+  $(green)export domain.com$(normalize)                   Export data about single domain
+"
+
 function echo_title {
 
     title=$1
@@ -69,6 +94,10 @@ if [ -f ~/.prospector ]; then
 else
 	echo "$(red)Missing configuration file with API keys$(normalize)"
 	exit 1
+fi
+
+if [ "$COMMAND" = "help" ]; then
+    clear; echo -e "$USAGE";
 fi
 
 if [ "$COMMAND" = "version-check" ]; then
