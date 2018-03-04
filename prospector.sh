@@ -110,7 +110,7 @@ fi
 
 if [ "$COMMAND" = "export" ]; then
     echo "-------- $2 --------" >> output.csv
-    curl --silent "https://company.clearbit.com/v2/companies/find?domain=$2" -u sk_3834ce4423aff86edde12dd2e9789f2d: | jq -r '{employees: .metrics.employeesRange, rev: .metrics.estimatedAnnualRevenue}' >> output.csv
+    curl --silent "https://company.clearbit.com/v2/companies/find?domain=$2" -u $CLEARBIT_KEY | jq -r '{employees: .metrics.employeesRange, rev: .metrics.estimatedAnnualRevenue} | to_entries[] | [.key, .value] | @csv' >> output.csv
     curl --silent "https://api.hunter.io/v2/domain-search?domain=$2&api_key=$HUNTER_KEY" | jq -r '.data.emails' | in2csv -f json | csvcut -c value,type,confidence >> output.csv
 fi
 
