@@ -13,7 +13,7 @@ curl https://raw.githubusercontent.com/stuntcoders/sc_prospector_wrapper/master/
 
 Then run following command:
 ```
-prospector example.com
+prospector export example.com
 ```
 
 ## To store API keys
