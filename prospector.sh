@@ -36,6 +36,7 @@ Global Commands:
   $(green)version-check$(normalize)                       Check if latest version is used
 
   $(green)export domain.com$(normalize)                   Export data about single domain
+  $(green)process filename.csv$(normalize)                Processes whole list of domains from CSV file
 "
 
 function echo_title {
@@ -104,7 +105,7 @@ if [ "$COMMAND" = "version-check" ]; then
     check_for_update
 fi
 
-if [ "$COMMAND" = "update"]; then
+if [ "$COMMAND" = "update" ]; then
     self_update
 fi
 
@@ -114,3 +115,12 @@ if [ "$COMMAND" = "export" ]; then
     curl --silent "https://api.hunter.io/v2/domain-search?domain=$2&api_key=$HUNTER_KEY" | jq -r '.data.emails' | in2csv -f json | csvcut -c value,type,confidence >> output.csv
 fi
 
+if [ "$COMMAND" = "process" ]; then
+    echo "Might take some time, please be patient..."
+
+    while IFS='' read -r domain || [[ -n "$domain" ]]; do
+        eval "bash $0 export $domain"
+    done < "$2"
+
+    echo "Done. Run '$(green)open output.csv$(normalize)' to see results."
+fi
