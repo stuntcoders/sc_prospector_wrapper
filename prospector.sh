@@ -24,7 +24,7 @@ Prospector by $(green)StuntCoders doo$(normalize)
  ------------
         \   ^__^
          \  (oo)\_______
-            (__)\       )\/\
+            (__)\       )\/\\
                 ||----w |
                 ||     ||
 
