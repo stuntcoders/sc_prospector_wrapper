@@ -36,7 +36,8 @@ Global Commands:
   $(green)version-check$(normalize)                       Check if latest version is used
 
   $(green)export domain.com$(normalize)                   Export data about single domain
-  $(green)process filename.csv$(normalize)                Processes whole list of domains from CSV file
+  $(green)process filename.csv$(normalize)                Processes whole list of domains from CSV file (CSV should contain only domains)
+  $(green)enrich filename.csv$(normalize)                 Enrich emails from csv (CSV should contain only emails)
 "
 
 function echo_title {
@@ -123,4 +124,18 @@ if [ "$COMMAND" = "process" ]; then
     done < "$2"
 
     echo "Done. Run '$(green)open output.csv$(normalize)' to see results."
+fi
+
+if [ "$COMMAND" = "enrich" ]; then
+    echo "I am stupid slow computer... please be patient ;)"
+
+    echo "Email,Given name,Family name,Linkedin,Company name,Industry category,Founded year,Facebook,Fb likes" > enrich_output.csv
+
+    while IFS='' read -r email || [[ -n "$email" ]]; do
+        echo -n "$email," >> enrich_output.csv
+        curl --silent "https://person-stream.clearbit.com/v2/combined/find?email=$email" -u $CLEARBIT_KEY | jq -r '{givenName: .person.name.givenName, familyName: .person.name.familyName, linkedin: .person.linkedin.handle, companyName: .company.name, industry: .company.category.industryGroup, foundedYear: .company.foundedYear, facebook: .company.facebook.handle, fbLikes: .company.facebook.likes} | to_entries[]' | jq .'value' | tr '\n' ',' >> enrich_output.csv
+        echo "" >> enrich_output.csv
+    done < "$2"
+
+    echo "Done. Run '$(green)open enrich_output.csv$(normalize)' to see results."
 fi
