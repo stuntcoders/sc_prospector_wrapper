@@ -133,7 +133,7 @@ if [ "$COMMAND" = "enrich" ]; then
 
     while IFS='' read -r email || [[ -n "$email" ]]; do
         echo -n "$email," >> enrich_output.csv
-        curl --silent "https://person-stream.clearbit.com/v2/combined/find?email=$email" -u $CLEARBIT_KEY | jq -r '{givenName: .person.name.givenName, familyName: .person.name.familyName, title: person.employment.title, linkedin: .person.linkedin.handle, companyName: .company.name, industry: .company.category.industryGroup, foundedYear: .company.foundedYear, facebook: .company.facebook.handle, fbLikes: .company.facebook.likes} | to_entries[]' | jq .'value' | tr '\n' ',' >> enrich_output.csv
+        curl --silent "https://person-stream.clearbit.com/v2/combined/find?email=$email" -u $CLEARBIT_KEY | jq -r '{givenName: .person.name.givenName, familyName: .person.name.familyName, title: .person.employment.title, linkedin: .person.linkedin.handle, companyName: .company.name, industry: .company.category.industryGroup, foundedYear: .company.foundedYear, facebook: .company.facebook.handle, fbLikes: .company.facebook.likes} | to_entries[]' | jq .'value' | tr '\n' ',' >> enrich_output.csv
         echo "" >> enrich_output.csv
     done < "$2"
 
